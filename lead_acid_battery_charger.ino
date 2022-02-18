@@ -92,7 +92,7 @@ void setup()
       //-------------------------------------//
       lcd.print(current_lt);
       lcd.print(" mA");
-      delay(3000);
+      delay(3 * ONE_SECOND);
       set_batt = false;
     }
   }
@@ -146,7 +146,7 @@ void loop()
     digitalWrite(RELAY_PIN, LOW);
     current_calib();
     digitalWrite(RELAY_PIN, HIGH);
-    delay(3000);
+    delay(3 * ONE_SECOND);
     currentReading = sensor.getCurrentDC();
     if (currentReading >= peak_I_lt)
     {
