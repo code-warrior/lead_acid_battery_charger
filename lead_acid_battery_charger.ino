@@ -4,7 +4,7 @@
 #include <LiquidCrystal_I2C.h> // https://gitlab.com/growduino/libs/LiquidCrystal_I2C
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); // Set the LCD address to 0x27 for a 16 × 2 display (16 chars, 2 lines)
-ACS712 sensor(ACS712_05B, ACS712_CURRENT_SENSOR);
+ACS712 AnalogCurrentSensor(ACS712_05B, ACS712_CURRENT_SENSOR);
 
 //------ Time out Setting --------//
 int h_lt = 7; // in hrs
@@ -104,7 +104,7 @@ void loop()
 {
   for (i = 0; i < 10; i++)
   {
-    currentReading = sensor.getCurrentDC();
+    currentReading = AnalogCurrentSensor.getCurrentDC();
     delay(100);
   }
   timer();
@@ -126,7 +126,7 @@ void loop()
   {
     for (i = 0; i < 10; i++)
     {
-      currentReading = sensor.getCurrentDC();
+      currentReading = AnalogCurrentSensor.getCurrentDC();
       delay(100);
     }
     if (currentReading <= cut_off)
@@ -140,14 +140,14 @@ void loop()
       while (true) {}
     }
   }
-  currentReading = sensor.getCurrentDC();
+  currentReading = AnalogCurrentSensor.getCurrentDC();
   if (currentReading >= peak_I_lt)
   {
     digitalWrite(RELAY_PIN, LOW);
     current_calib();
     digitalWrite(RELAY_PIN, HIGH);
     delay(3 * ONE_SECOND);
-    currentReading = sensor.getCurrentDC();
+    currentReading = AnalogCurrentSensor.getCurrentDC();
     if (currentReading >= peak_I_lt)
     {
       while (true)
@@ -176,14 +176,14 @@ void current_calib()
   lcd.print("Auto Calibrating");
   lcd.setCursor(0, 1);
   lcd.print("Current Sensor.");
-  sensor.calibrate();
+  AnalogCurrentSensor.calibrate();
   delay(ONE_SECOND);
-  currentReading = sensor.getCurrentDC();
+  currentReading = AnalogCurrentSensor.getCurrentDC();
   if (currentReading >= 0.02 || currentReading <= -0.02 )
   {
-    sensor.calibrate();
+    AnalogCurrentSensor.calibrate();
     delay(5 * ONE_SECOND);
-    currentReading = sensor.getCurrentDC();
+    currentReading = AnalogCurrentSensor.getCurrentDC();
     if (currentReading >= 0.02)
     {
       current_calib();
@@ -247,7 +247,7 @@ void CCCV()
   digitalWrite(RELAY_PIN, HIGH);
   for (i = 0; i < 20; i++)
   {
-    currentReading = sensor.getCurrentDC();
+    currentReading = AnalogCurrentSensor.getCurrentDC();
     delay(100);
   }
   if (currentReading <= -0.1)
