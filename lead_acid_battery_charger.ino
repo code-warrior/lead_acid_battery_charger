@@ -11,7 +11,6 @@ int h_lt = 7; // in hrs
 int m_lt = 0; // in min
 // -------------------------------//
 
-const int ok = 3;
 int address = 0;
 int batt_cap;
 int current_lt = 0;
@@ -30,7 +29,7 @@ void setup()
   pinMode(RELAY_PIN, OUTPUT);
   digitalWrite(RELAY_PIN, LOW);
   pinMode(INCREMENT_CAPACITY_BUTTON, INPUT_PULLUP);
-  pinMode(ok, INPUT_PULLUP);
+  pinMode(START_CHARGING_BUTTON, INPUT_PULLUP);
   lcd.init();
   lcd.backlight();
   EEPROM.get(address, batt_cap);
@@ -51,7 +50,7 @@ void setup()
     {
       while (var)
       {
-        if (digitalRead(ok) == LOW) var = false;
+        if (digitalRead(START_CHARGING_BUTTON) == LOW) var = false;
         if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW)
         {
           lcd.setCursor(0, 1);
@@ -70,7 +69,7 @@ void setup()
         }
       }
     }
-    if (digitalRead(ok) == LOW)
+    if (digitalRead(START_CHARGING_BUTTON) == LOW)
     {
       EEPROM.put(address, batt_cap);
       lcd.clear();
