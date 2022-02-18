@@ -11,7 +11,6 @@ int h_lt = 7; // in hrs
 int m_lt = 0; // in min
 // -------------------------------//
 
-const int inc = 4;
 const int ok = 3;
 int address = 0;
 int batt_cap;
@@ -30,7 +29,7 @@ void setup()
 {
   pinMode(RELAY_PIN, OUTPUT);
   digitalWrite(RELAY_PIN, LOW);
-  pinMode(inc, INPUT_PULLUP);
+  pinMode(INCREMENT_CAPACITY_BUTTON, INPUT_PULLUP);
   pinMode(ok, INPUT_PULLUP);
   lcd.init();
   lcd.backlight();
@@ -48,12 +47,12 @@ void setup()
     EEPROM.get(address, batt_cap);
     lcd.print(batt_cap);
     lcd.print(" mAh");
-    if (digitalRead(inc) == LOW)
+    if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW)
     {
       while (var)
       {
         if (digitalRead(ok) == LOW) var = false;
-        if (digitalRead(inc) == LOW)
+        if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW)
         {
           lcd.setCursor(0, 1);
           batt_cap = batt_cap + 500;
