@@ -11,7 +11,6 @@ int h_lt = 7; // in hrs
 int m_lt = 0; // in min
 // -------------------------------//
 
-const int relay = 5;
 const int inc = 4;
 const int ok = 3;
 int address = 0;
@@ -29,8 +28,8 @@ float currentReading;
 float CV_current = 0;
 void setup()
 {
-  pinMode(relay, OUTPUT);
-  digitalWrite(relay, LOW);
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, LOW);
   pinMode(inc, INPUT_PULLUP);
   pinMode(ok, INPUT_PULLUP);
   lcd.init();
@@ -134,7 +133,7 @@ void loop()
     }
     if (currentReading <= cut_off)
     {
-      digitalWrite(relay, LOW);
+      digitalWrite(RELAY_PIN, LOW);
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("BATTERY FULLY");
@@ -146,16 +145,16 @@ void loop()
   currentReading = sensor.getCurrentDC();
   if (currentReading >= peak_I_lt)
   {
-    digitalWrite(relay, LOW);
+    digitalWrite(RELAY_PIN, LOW);
     current_calib();
-    digitalWrite(relay, HIGH);
+    digitalWrite(RELAY_PIN, HIGH);
     delay(3000);
     currentReading = sensor.getCurrentDC();
     if (currentReading >= peak_I_lt)
     {
       while (true)
       {
-        digitalWrite(relay, LOW);
+        digitalWrite(RELAY_PIN, LOW);
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("Overcharging");
@@ -210,7 +209,7 @@ void timer()
   }
   if (hrs == h_lt && Min == m_lt)
   {
-    digitalWrite(relay, LOW);
+    digitalWrite(RELAY_PIN, LOW);
     while (true)
     {
       lcd.clear();
@@ -234,9 +233,9 @@ void re_calib()
   if (Min == 10 || Min == 20 || Min == 30 || Min == 40 ||
       Min == 50 || Min == 60 && sec == 0)
   {
-    digitalWrite(relay, LOW);
+    digitalWrite(RELAY_PIN, LOW);
     current_calib();
-    digitalWrite(relay, HIGH);
+    digitalWrite(RELAY_PIN, HIGH);
   }
 }
 
@@ -247,7 +246,7 @@ void CCCV()
   lcd.print("Analyzing CC/CV");
   lcd.setCursor(0, 1);
   lcd.print("Modes...");
-  digitalWrite(relay, HIGH);
+  digitalWrite(RELAY_PIN, HIGH);
   for (i = 0; i < 20; i++)
   {
     currentReading = sensor.getCurrentDC();
@@ -257,7 +256,7 @@ void CCCV()
   {
     while (true)
     {
-      digitalWrite(relay, LOW);
+      digitalWrite(RELAY_PIN, LOW);
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Reverse current");
