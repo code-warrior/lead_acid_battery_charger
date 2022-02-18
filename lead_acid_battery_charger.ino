@@ -179,7 +179,7 @@ void current_calib()
   lcd.setCursor(0, 1);
   lcd.print("Current Sensor.");
   sensor.calibrate();
-  delay(1000);
+  delay(ONE_SECOND);
   currentReading = sensor.getCurrentDC();
   if (currentReading >= 0.02 || currentReading <= -0.02 )
   {
