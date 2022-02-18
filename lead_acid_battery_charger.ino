@@ -184,7 +184,7 @@ void current_calib()
   if (currentReading >= 0.02 || currentReading <= -0.02 )
   {
     sensor.calibrate();
-    delay(5000);
+    delay(5 * ONE_SECOND);
     currentReading = sensor.getCurrentDC();
     if (currentReading >= 0.02)
     {
