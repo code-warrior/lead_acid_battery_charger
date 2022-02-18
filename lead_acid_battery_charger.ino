@@ -3,8 +3,7 @@
 #include <EEPROM.h>
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-#define sensorInput A0
-ACS712 sensor(ACS712_05B, sensorInput);
+ACS712 sensor(ACS712_05B, ACS712_CURRENT_SENSOR);
 
 //------ Time out Setting --------//
 int h_lt = 7; // in hrs
