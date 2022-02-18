@@ -79,7 +79,7 @@ void setup()
       lcd.print("is ");
       lcd.print(batt_cap);
       lcd.print(" mAh.");
-      delay(2000);
+      delay(2 * ONE_SECOND);
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Set current");
@@ -158,13 +158,13 @@ void loop()
         lcd.print("Overcharging");
         lcd.setCursor(0, 1);
         lcd.print("current detected");
-        delay(2000);
+        delay(2 * ONE_SECOND);
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("Charging halted.");
         lcd.setCursor(0, 1);
         lcd.print("Press reset.");
-        delay(2000);
+        delay(2 * ONE_SECOND);
       }
     }
   }
@@ -215,13 +215,13 @@ void timer()
       lcd.print("Time out !!!");
       lcd.setCursor(0, 1);
       lcd.print("Charge Completed");
-      delay(2000);
+      delay(2 * ONE_SECOND);
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("  Press reset");
       lcd.setCursor(0, 1);
       lcd.print("****************");
-      delay(2000);
+      delay(2 * ONE_SECOND);
     }
   }
 }
@@ -260,13 +260,13 @@ void CCCV()
       lcd.print("Reverse current");
       lcd.setCursor(0, 1);
       lcd.print("detected.");
-      delay(2000);
+      delay(2 * ONE_SECOND);
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Flip current");
       lcd.setCursor(0, 1);
       lcd.print("sensor polarity.");
-      delay(2000);
+      delay(2 * ONE_SECOND);
     }
   }
   CV_current = currentReading * 0.8;
