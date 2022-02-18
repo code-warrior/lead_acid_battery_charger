@@ -1,8 +1,9 @@
 //-------© Electronics-Project-hub-------//
-#include "ACS712.h"
+#include "ACS712.h"            // https://github.com/rkoptev/ACS712-arduino
 #include <EEPROM.h>
-#include <LiquidCrystal_I2C.h>
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+#include <LiquidCrystal_I2C.h> // https://gitlab.com/growduino/libs/LiquidCrystal_I2C
+
+LiquidCrystal_I2C lcd(0x27, 16, 2); // Set the LCD address to 0x27 for a 16 × 2 display (16 chars, 2 lines)
 ACS712 sensor(ACS712_05B, ACS712_CURRENT_SENSOR);
 
 //------ Time out Setting --------//
