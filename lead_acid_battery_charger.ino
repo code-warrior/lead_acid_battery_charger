@@ -7,7 +7,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // Set the LCD address to 0x27 for a 16 × 2
 ACS712 AnalogCurrentSensor(ACS712_05B, ACS712_CURRENT_SENSOR);
 
 int battery_capacity_in_milliamp_hours;
-int current_limit = 0;
+int current__charging_limit = 0;
 float current__peak_limit = 0;
 float current__cut_off = 0;
 boolean set_batt = true;
@@ -86,12 +86,12 @@ void setup() {
          lcd.print("limit = ");
 
          //------- Charging Parameters ----------//
-         current_limit = battery_capacity_in_milliamp_hours * 0.2;
+         current__charging_limit = battery_capacity_in_milliamp_hours * 0.2;
          current__peak_limit = battery_capacity_in_milliamp_hours * 0.3 * 0.001;
          current__cut_off = battery_capacity_in_milliamp_hours * 0.04 * 0.001;
          //-------------------------------------//
 
-         lcd.print(current_limit);
+         lcd.print(current__charging_limit);
          lcd.print(" mA");
 
          delay(3 * ONE_SECOND);
