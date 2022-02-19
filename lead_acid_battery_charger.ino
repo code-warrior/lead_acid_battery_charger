@@ -211,7 +211,7 @@ void timer() {
    if (seconds_spent_charging == 60) {
       seconds_spent_charging = 0;
       minutes_spent_charging += 1;
-      re_calib();
+      recalibrate_current_to_battery();
    }
 
    if (minutes_spent_charging == 60) {
@@ -239,7 +239,7 @@ void timer() {
    }
 }
 
-void re_calib() {
+void recalibrate_current_to_battery() {
    if (minutes_spent_charging == 10 || minutes_spent_charging == 20 || minutes_spent_charging == 30 || minutes_spent_charging == 40 ||
        minutes_spent_charging == 50 || minutes_spent_charging == 60 && seconds_spent_charging == 0) {
       digitalWrite(RELAY_PIN, LOW);
