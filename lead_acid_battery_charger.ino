@@ -107,7 +107,7 @@ void setup() {
       }
    }
 
-   current_calib();
+   calibrate_current_to_battery();
    CCCV();
 }
 
@@ -160,7 +160,7 @@ void loop() {
 
    if (currentReading >= peak_I_lt) {
       digitalWrite(RELAY_PIN, LOW);
-      current_calib();
+      calibrate_current_to_battery();
       digitalWrite(RELAY_PIN, HIGH);
       delay(3 * ONE_SECOND);
 
@@ -186,7 +186,7 @@ void loop() {
    }
 }
 
-void current_calib() {
+void calibrate_current_to_battery() {
    lcd.clear();
    lcd.print("Auto Calibrating");
    lcd.setCursor(0, 1);
@@ -201,7 +201,7 @@ void current_calib() {
       currentReading = AnalogCurrentSensor.getCurrentDC();
 
       if (currentReading >= 0.02) {
-         current_calib();
+         calibrate_current_to_battery();
       }
    }
 }
@@ -244,7 +244,7 @@ void re_calib() {
    if (minutes_spent_charging == 10 || minutes_spent_charging == 20 || minutes_spent_charging == 30 || minutes_spent_charging == 40 ||
        minutes_spent_charging == 50 || minutes_spent_charging == 60 && seconds_spent_charging == 0) {
       digitalWrite(RELAY_PIN, LOW);
-      current_calib();
+      calibrate_current_to_battery();
       digitalWrite(RELAY_PIN, HIGH);
    }
 }
