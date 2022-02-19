@@ -19,9 +19,9 @@ float peak_I_lt = 0;
 float cut_off = 0;
 boolean set_batt = true;
 boolean var = true;
-int hrs = 0;
-int Min = 0;
-int sec = 0;
+int hours_spent_charging = 0;
+int minutes_spent_charging = 0;
+int seconds_spent_charging = 0;
 float currentReading;
 float CV_current = 0;
 
@@ -207,20 +207,20 @@ void current_calib() {
 }
 
 void timer() {
-   sec += 1;
+   seconds_spent_charging += 1;
 
-   if (sec == 60) {
-      sec = 0;
-      Min += 1;
+   if (seconds_spent_charging == 60) {
+      seconds_spent_charging = 0;
+      minutes_spent_charging += 1;
       re_calib();
    }
 
-   if (Min == 60) {
-      Min = 0;
-      hrs += 1;
+   if (minutes_spent_charging == 60) {
+      minutes_spent_charging = 0;
+      hours_spent_charging += 1;
    }
 
-   if (hrs == h_lt && Min == m_lt) {
+   if (hours_spent_charging == h_lt && minutes_spent_charging == m_lt) {
       digitalWrite(RELAY_PIN, LOW);
 
       while (true) {
@@ -241,8 +241,8 @@ void timer() {
 }
 
 void re_calib() {
-   if (Min == 10 || Min == 20 || Min == 30 || Min == 40 ||
-       Min == 50 || Min == 60 && sec == 0) {
+   if (minutes_spent_charging == 10 || minutes_spent_charging == 20 || minutes_spent_charging == 30 || minutes_spent_charging == 40 ||
+       minutes_spent_charging == 50 || minutes_spent_charging == 60 && seconds_spent_charging == 0) {
       digitalWrite(RELAY_PIN, LOW);
       current_calib();
       digitalWrite(RELAY_PIN, HIGH);
