@@ -9,7 +9,7 @@ ACS712 AnalogCurrentSensor(ACS712_05B, ACS712_CURRENT_SENSOR);
 int battery_capacity_in_milliamp_hours;
 int current_limit = 0;
 float current__peak_limit = 0;
-float cut_off = 0;
+float current__cut_off = 0;
 boolean set_batt = true;
 boolean var = true;
 int hours_spent_charging = 0;
@@ -88,7 +88,7 @@ void setup() {
          //------- Charging Parameters ----------//
          current_limit = battery_capacity_in_milliamp_hours * 0.2;
          current__peak_limit = battery_capacity_in_milliamp_hours * 0.3 * 0.001;
-         cut_off = battery_capacity_in_milliamp_hours * 0.04 * 0.001;
+         current__cut_off = battery_capacity_in_milliamp_hours * 0.04 * 0.001;
          //-------------------------------------//
 
          lcd.print(current_limit);
@@ -129,14 +129,14 @@ void loop() {
    lcd.print(current_dc_reading);
    lcd.print(" A");
 
-   if (current_dc_reading <= cut_off) {
+   if (current_dc_reading <= current__cut_off) {
       for (i = 0; i < 10; i++) {
          current_dc_reading = AnalogCurrentSensor.getCurrentDC();
          delay(.1 * ONE_SECOND);
       }
 
       // As the battery charges, the current in the battery goes down
-      if (current_dc_reading <= cut_off) {
+      if (current_dc_reading <= current__cut_off) {
          digitalWrite(RELAY_PIN, LOW);
          lcd.clear();
          lcd.setCursor(0, 0);
