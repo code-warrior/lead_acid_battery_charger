@@ -19,7 +19,6 @@ float peak_I_lt = 0;
 float cut_off = 0;
 boolean set_batt = true;
 boolean var = true;
-int i = 0;
 int hrs = 0;
 int Min = 0;
 int sec = 0;
@@ -113,6 +112,8 @@ void setup() {
 }
 
 void loop() {
+   static int i;
+
    for (i = 0; i < 10; i++) {
       currentReading = AnalogCurrentSensor.getCurrentDC();
       delay(.1 * ONE_SECOND);
@@ -249,6 +250,8 @@ void re_calib() {
 }
 
 void CCCV() {
+   static int i;
+
    lcd.clear();
    lcd.setCursor(0, 0);
    lcd.print("Analyzing CC/CV");
