@@ -1,4 +1,3 @@
-//-------© Electronics-Project-hub-------//
 #include "constants.h"
 #include "ACS712.h"            // https://github.com/rkoptev/ACS712-arduino
 #include <EEPROM.h>
@@ -278,4 +277,3 @@ void CCCV() {
 
    CV_current = current_dc_reading * 0.8;
 }
-//-------© Electronics-Project-hub-------//
