@@ -249,8 +249,6 @@ void recalibrate_current_to_battery() {
 }
 
 void CCCV() {
-   static int i;
-
    lcd.clear();
    lcd.setCursor(0, 0);
    lcd.print("Analyzing CC/CV");
@@ -258,7 +256,7 @@ void CCCV() {
    lcd.print("Modes...");
    digitalWrite(RELAY_PIN, HIGH);
 
-   for (i = 0; i < 20; i++) {
+   for (static int i = 0; i < 20; i++) {
       current_dc_reading = AnalogCurrentSensor.getCurrentDC();
       delay(.1 * ONE_SECOND);
    }
