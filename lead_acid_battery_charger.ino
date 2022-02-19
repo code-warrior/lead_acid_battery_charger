@@ -7,7 +7,6 @@
 LiquidCrystal_I2C lcd(0x27, 16, 2); // Set the LCD address to 0x27 for a 16 × 2 display (16 chars, 2 lines)
 ACS712 AnalogCurrentSensor(ACS712_05B, ACS712_CURRENT_SENSOR);
 
-int address = 0;
 int battery_capacity_in_milliamp_hours;
 int current_limit = 0;
 float peak_I_lt = 0;
@@ -27,10 +26,10 @@ void setup() {
    pinMode(START_CHARGING_BUTTON, INPUT_PULLUP);
    lcd.init();
    lcd.backlight();
-   EEPROM.get(address, battery_capacity_in_milliamp_hours);
+   EEPROM.get(START_ADDRESS, battery_capacity_in_milliamp_hours);
 
    if (battery_capacity_in_milliamp_hours < 4500) {
-      EEPROM.put(address, 4500);
+      EEPROM.put(START_ADDRESS, 4500);
    }
 
    lcd.clear();
@@ -39,7 +38,7 @@ void setup() {
       lcd.setCursor(0, 0);
       lcd.print("Enter capacity:");
       lcd.setCursor(0, 1);
-      EEPROM.get(address, battery_capacity_in_milliamp_hours);
+      EEPROM.get(START_ADDRESS, battery_capacity_in_milliamp_hours);
       lcd.print(battery_capacity_in_milliamp_hours);
       lcd.print(" mAh");
 
@@ -70,7 +69,7 @@ void setup() {
       }
 
       if (digitalRead(START_CHARGING_BUTTON) == LOW) {
-         EEPROM.put(address, battery_capacity_in_milliamp_hours);
+         EEPROM.put(START_ADDRESS, battery_capacity_in_milliamp_hours);
          lcd.clear();
          lcd.setCursor(0, 0);
          lcd.print("Your battery");
