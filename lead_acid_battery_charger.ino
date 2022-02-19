@@ -185,105 +185,100 @@ void loop() {
    }
 }
 
-void current_calib()
-{
-  lcd.clear();
-  lcd.print("Auto Calibrating");
-  lcd.setCursor(0, 1);
-  lcd.print("Current Sensor.");
-  AnalogCurrentSensor.calibrate();
-  delay(ONE_SECOND);
-  currentReading = AnalogCurrentSensor.getCurrentDC();
-  if (currentReading >= 0.02 || currentReading <= -0.02 )
-  {
-    AnalogCurrentSensor.calibrate();
-    delay(5 * ONE_SECOND);
-    currentReading = AnalogCurrentSensor.getCurrentDC();
-    if (currentReading >= 0.02)
-    {
-      current_calib();
-    }
-  }
+void current_calib() {
+   lcd.clear();
+   lcd.print("Auto Calibrating");
+   lcd.setCursor(0, 1);
+   lcd.print("Current Sensor.");
+   AnalogCurrentSensor.calibrate();
+   delay(ONE_SECOND);
+   currentReading = AnalogCurrentSensor.getCurrentDC();
+
+   if (currentReading >= 0.02 || currentReading <= -0.02 ) {
+      AnalogCurrentSensor.calibrate();
+      delay(5 * ONE_SECOND);
+      currentReading = AnalogCurrentSensor.getCurrentDC();
+
+      if (currentReading >= 0.02) {
+         current_calib();
+      }
+   }
 }
 
-void timer()
-{
-  sec = sec + 1;
-  if (sec == 60)
-  {
-    sec = 0;
-    Min = Min + 1;
-    re_calib();
-  }
-  if (Min == 60)
-  {
-    Min = 0;
-    hrs = hrs + 1;
-  }
-  if (hrs == h_lt && Min == m_lt)
-  {
-    digitalWrite(RELAY_PIN, LOW);
-    while (true)
-    {
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Time out !!!");
-      lcd.setCursor(0, 1);
-      lcd.print("Charge Completed");
-      delay(2 * ONE_SECOND);
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("  Press reset");
-      lcd.setCursor(0, 1);
-      lcd.print("****************");
-      delay(2 * ONE_SECOND);
-    }
-  }
-}
+void timer() {
+   sec = sec + 1;
 
-void re_calib()
-{
-  if (Min == 10 || Min == 20 || Min == 30 || Min == 40 ||
-      Min == 50 || Min == 60 && sec == 0)
-  {
-    digitalWrite(RELAY_PIN, LOW);
-    current_calib();
-    digitalWrite(RELAY_PIN, HIGH);
-  }
-}
+   if (sec == 60) {
+      sec = 0;
+      Min = Min + 1;
+      re_calib();
+   }
 
-void CCCV()
-{
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Analyzing CC/CV");
-  lcd.setCursor(0, 1);
-  lcd.print("Modes...");
-  digitalWrite(RELAY_PIN, HIGH);
-  for (i = 0; i < 20; i++)
-  {
-    currentReading = AnalogCurrentSensor.getCurrentDC();
-    delay(100);
-  }
-  if (currentReading <= -0.1)
-  {
-    while (true)
-    {
+   if (Min == 60) {
+      Min = 0;
+      hrs = hrs + 1;
+   }
+
+   if (hrs == h_lt && Min == m_lt) {
       digitalWrite(RELAY_PIN, LOW);
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Reverse current");
-      lcd.setCursor(0, 1);
-      lcd.print("detected.");
-      delay(2 * ONE_SECOND);
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Flip current");
-      lcd.setCursor(0, 1);
-      lcd.print("sensor polarity.");
-      delay(2 * ONE_SECOND);
-    }
-  }
-  CV_current = currentReading * 0.8;
+
+      while (true) {
+         lcd.clear();
+         lcd.setCursor(0, 0);
+         lcd.print("Time out !!!");
+         lcd.setCursor(0, 1);
+         lcd.print("Charge Completed");
+         delay(2 * ONE_SECOND);
+         lcd.clear();
+         lcd.setCursor(0, 0);
+         lcd.print("  Press reset");
+         lcd.setCursor(0, 1);
+         lcd.print("****************");
+         delay(2 * ONE_SECOND);
+      }
+   }
+}
+
+void re_calib() {
+   if (Min == 10 || Min == 20 || Min == 30 || Min == 40 ||
+       Min == 50 || Min == 60 && sec == 0) {
+      digitalWrite(RELAY_PIN, LOW);
+      current_calib();
+      digitalWrite(RELAY_PIN, HIGH);
+   }
+}
+
+void CCCV() {
+   lcd.clear();
+   lcd.setCursor(0, 0);
+   lcd.print("Analyzing CC/CV");
+   lcd.setCursor(0, 1);
+   lcd.print("Modes...");
+   digitalWrite(RELAY_PIN, HIGH);
+
+   for (i = 0; i < 20; i++) {
+      currentReading = AnalogCurrentSensor.getCurrentDC();
+      delay(100);
+   }
+
+   if (currentReading <= -0.1) {
+      while (true) {
+         digitalWrite(RELAY_PIN, LOW);
+         lcd.clear();
+         lcd.setCursor(0, 0);
+         lcd.print("Reverse current");
+         lcd.setCursor(0, 1);
+         lcd.print("detected.");
+         delay(2 * ONE_SECOND);
+         lcd.clear();
+         lcd.setCursor(0, 0);
+         lcd.print("Flip current");
+         lcd.setCursor(0, 1);
+         lcd.print("sensor polarity.");
+         delay(2 * ONE_SECOND);
+      }
+   }
+
+   CV_current = currentReading * 0.8;
 }
 //-------© Electronics-Project-hub-------//
