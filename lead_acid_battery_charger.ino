@@ -41,12 +41,12 @@ void setup() {
       lcd.print(battery_capacity_in_milliamp_hours);
       lcd.print(" mAh");
 
-      if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW) {
+      if (digitalRead(INCREMENT_CAPACITY_BUTTON) == PRESSED) {
          while (var) {
-            if (digitalRead(START_CHARGING_BUTTON) == LOW)
+            if (digitalRead(START_CHARGING_BUTTON) == PRESSED)
                var = false;
 
-            if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW) {
+            if (digitalRead(INCREMENT_CAPACITY_BUTTON) == PRESSED) {
                lcd.setCursor(0, 1);
                battery_capacity_in_milliamp_hours += 500;
 
@@ -67,7 +67,7 @@ void setup() {
          }
       }
 
-      if (digitalRead(START_CHARGING_BUTTON) == LOW) {
+      if (digitalRead(START_CHARGING_BUTTON) == PRESSED) {
          EEPROM.put(START_ADDRESS, battery_capacity_in_milliamp_hours);
          lcd.clear();
          lcd.setCursor(0, 0);

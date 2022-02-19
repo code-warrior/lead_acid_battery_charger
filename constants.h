@@ -8,3 +8,4 @@
 #define MAX_HOURS_BATTERY_SHOULD_CHARGE 7
 #define ONE_SECOND                      1000
 #define START_ADDRESS                   0
+#define PRESSED                         LOW
