@@ -56,7 +56,7 @@ void setup() {
 
             if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW) {
                lcd.setCursor(0, 1);
-               battery_capacity = battery_capacity + 500;
+               battery_capacity += 500;
 
                if (battery_capacity > 15000) {
                   battery_capacity = 4500;
@@ -206,17 +206,17 @@ void current_calib() {
 }
 
 void timer() {
-   sec = sec + 1;
+   sec += 1;
 
    if (sec == 60) {
       sec = 0;
-      Min = Min + 1;
+      Min += 1;
       re_calib();
    }
 
    if (Min == 60) {
       Min = 0;
-      hrs = hrs + 1;
+      hrs += 1;
    }
 
    if (hrs == h_lt && Min == m_lt) {
