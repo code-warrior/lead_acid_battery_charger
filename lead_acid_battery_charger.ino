@@ -13,7 +13,7 @@ int m_lt = 0; // in min
 
 int address = 0;
 int battery_capacity;
-int current_lt = 0;
+int current_limit = 0;
 float peak_I_lt = 0;
 float cut_off = 0;
 boolean set_batt = true;
@@ -93,12 +93,12 @@ void setup() {
          lcd.print("limit = ");
 
          //------- Charging Parameters ----------//
-         current_lt = battery_capacity * 0.2;
+         current_limit = battery_capacity * 0.2;
          peak_I_lt = battery_capacity * 0.3 * 0.001;
          cut_off = battery_capacity * 0.04 * 0.001;
          //-------------------------------------//
 
-         lcd.print(current_lt);
+         lcd.print(current_limit);
          lcd.print(" mA");
 
          delay(3 * ONE_SECOND);
