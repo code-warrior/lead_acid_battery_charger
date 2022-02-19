@@ -111,74 +111,77 @@ void setup() {
    CCCV();
 }
 
-void loop()
-{
-  for (i = 0; i < 10; i++)
-  {
-    currentReading = AnalogCurrentSensor.getCurrentDC();
-    delay(100);
-  }
-  timer();
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  if (currentReading <= CV_current)
-  {
-    lcd.print("MODE:CV");
-  }
-  if (currentReading > CV_current)
-  {
-    lcd.print("MODE:CC");
-  }
-  lcd.setCursor(0, 1);
-  lcd.print("CURRENT: ");
-  lcd.print(currentReading);
-  lcd.print(" A");
-  if (currentReading <= cut_off)
-  {
-    for (i = 0; i < 10; i++)
-    {
+void loop() {
+   for (i = 0; i < 10; i++) {
       currentReading = AnalogCurrentSensor.getCurrentDC();
       delay(100);
-    }
-    if (currentReading <= cut_off)
-    {
-      digitalWrite(RELAY_PIN, LOW);
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("BATTERY FULLY");
-      lcd.setCursor(0, 1);
-      lcd.print("CHARGED.");
-      while (true) {}
-    }
-  }
-  currentReading = AnalogCurrentSensor.getCurrentDC();
-  if (currentReading >= peak_I_lt)
-  {
-    digitalWrite(RELAY_PIN, LOW);
-    current_calib();
-    digitalWrite(RELAY_PIN, HIGH);
-    delay(3 * ONE_SECOND);
-    currentReading = AnalogCurrentSensor.getCurrentDC();
-    if (currentReading >= peak_I_lt)
-    {
-      while (true)
-      {
-        digitalWrite(RELAY_PIN, LOW);
-        lcd.clear();
-        lcd.setCursor(0, 0);
-        lcd.print("Overcharging");
-        lcd.setCursor(0, 1);
-        lcd.print("current detected");
-        delay(2 * ONE_SECOND);
-        lcd.clear();
-        lcd.setCursor(0, 0);
-        lcd.print("Charging halted.");
-        lcd.setCursor(0, 1);
-        lcd.print("Press reset.");
-        delay(2 * ONE_SECOND);
+   }
+
+   timer();
+   lcd.clear();
+   lcd.setCursor(0, 0);
+
+   if (currentReading <= CV_current) {
+      lcd.print("MODE:CV");
+   }
+
+   if (currentReading > CV_current) {
+      lcd.print("MODE:CC");
+   }
+
+   lcd.setCursor(0, 1);
+   lcd.print("CURRENT: ");
+   lcd.print(currentReading);
+   lcd.print(" A");
+
+   if (currentReading <= cut_off) {
+      for (i = 0; i < 10; i++) {
+         currentReading = AnalogCurrentSensor.getCurrentDC();
+         delay(100);
       }
-    }
-  }
+
+      if (currentReading <= cut_off) {
+         digitalWrite(RELAY_PIN, LOW);
+         lcd.clear();
+         lcd.setCursor(0, 0);
+         lcd.print("BATTERY FULLY");
+         lcd.setCursor(0, 1);
+         lcd.print("CHARGED.");
+
+         /* ??? */
+         while (true) {
+         }
+      }
+   }
+
+   currentReading = AnalogCurrentSensor.getCurrentDC();
+
+   if (currentReading >= peak_I_lt) {
+      digitalWrite(RELAY_PIN, LOW);
+      current_calib();
+      digitalWrite(RELAY_PIN, HIGH);
+      delay(3 * ONE_SECOND);
+
+      currentReading = AnalogCurrentSensor.getCurrentDC();
+
+      if (currentReading >= peak_I_lt) {
+         while (true) {
+            digitalWrite(RELAY_PIN, LOW);
+            lcd.clear();
+            lcd.setCursor(0, 0);
+            lcd.print("Overcharging");
+            lcd.setCursor(0, 1);
+            lcd.print("current detected");
+            delay(2 * ONE_SECOND);
+            lcd.clear();
+            lcd.setCursor(0, 0);
+            lcd.print("Charging halted.");
+            lcd.setCursor(0, 1);
+            lcd.print("Press reset.");
+            delay(2 * ONE_SECOND);
+         }
+      }
+   }
 }
 
 void current_calib()
