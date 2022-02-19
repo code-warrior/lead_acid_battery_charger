@@ -8,7 +8,6 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // Set the LCD address to 0x27 for a 16 × 2
 ACS712 AnalogCurrentSensor(ACS712_05B, ACS712_CURRENT_SENSOR);
 
 //------ Time out Setting --------//
-int h_lt = 7; // in hrs
 int m_lt = 0; // in min
 // -------------------------------//
 
@@ -221,7 +220,7 @@ void timer() {
       hours_spent_charging += 1;
    }
 
-   if (hours_spent_charging == h_lt && minutes_spent_charging == m_lt) {
+   if (hours_spent_charging == MAX_HOURS_BATTERY_SHOULD_CHARGE && minutes_spent_charging == m_lt) {
       digitalWrite(RELAY_PIN, LOW);
 
       while (true) {
