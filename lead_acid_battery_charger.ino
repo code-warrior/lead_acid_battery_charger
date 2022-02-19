@@ -24,80 +24,91 @@ int Min = 0;
 int sec = 0;
 float currentReading;
 float CV_current = 0;
-void setup()
-{
-  pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, LOW);
-  pinMode(INCREMENT_CAPACITY_BUTTON, INPUT_PULLUP);
-  pinMode(START_CHARGING_BUTTON, INPUT_PULLUP);
-  lcd.init();
-  lcd.backlight();
-  EEPROM.get(address, batt_cap);
-  if (batt_cap < 4500)
-  {
-    EEPROM.put(address, 4500);
-  }
-  lcd.clear();
-  while (set_batt)
-  {
-    lcd.setCursor(0, 0);
-    lcd.print("Enter capacity:");
-    lcd.setCursor(0, 1);
-    EEPROM.get(address, batt_cap);
-    lcd.print(batt_cap);
-    lcd.print(" mAh");
-    if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW)
-    {
-      while (var)
-      {
-        if (digitalRead(START_CHARGING_BUTTON) == LOW) var = false;
-        if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW)
-        {
-          lcd.setCursor(0, 1);
-          batt_cap = batt_cap + 500;
-          if (batt_cap > 15000)
-          {
-            batt_cap = 4500;
-            lcd.clear();
-          }
-          lcd.setCursor(0, 0);
-          lcd.print("Enter capacity:");
-          lcd.setCursor(0, 1);
-          lcd.print(batt_cap);
-          lcd.print(" mAh");
-          delay(250);
-        }
-      }
-    }
-    if (digitalRead(START_CHARGING_BUTTON) == LOW)
-    {
-      EEPROM.put(address, batt_cap);
-      lcd.clear();
+
+void setup() {
+   pinMode(RELAY_PIN, OUTPUT);
+   digitalWrite(RELAY_PIN, LOW);
+   pinMode(INCREMENT_CAPACITY_BUTTON, INPUT_PULLUP);
+   pinMode(START_CHARGING_BUTTON, INPUT_PULLUP);
+   lcd.init();
+   lcd.backlight();
+   EEPROM.get(address, batt_cap);
+
+   if (batt_cap < 4500) {
+      EEPROM.put(address, 4500);
+   }
+
+   lcd.clear();
+
+   while (set_batt) {
       lcd.setCursor(0, 0);
-      lcd.print("Your battery");
+      lcd.print("Enter capacity:");
       lcd.setCursor(0, 1);
-      lcd.print("is ");
+      EEPROM.get(address, batt_cap);
       lcd.print(batt_cap);
-      lcd.print(" mAh.");
-      delay(2 * ONE_SECOND);
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Set current");
-      lcd.setCursor(0, 1);
-      lcd.print("limit = ");
-      //------- Charging Parameters ----------//
-      current_lt = batt_cap * 0.2;
-      peak_I_lt = batt_cap * 0.3 * 0.001;
-      cut_off = batt_cap * 0.04 * 0.001; 
-      //-------------------------------------//
-      lcd.print(current_lt);
-      lcd.print(" mA");
-      delay(3 * ONE_SECOND);
-      set_batt = false;
-    }
-  }
-  current_calib();
-  CCCV();
+      lcd.print(" mAh");
+
+      if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW) {
+         while (var) {
+            if (digitalRead(START_CHARGING_BUTTON) == LOW)
+               var = false;
+
+            if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW) {
+               lcd.setCursor(0, 1);
+               batt_cap = batt_cap + 500;
+
+               if (batt_cap > 15000) {
+                  batt_cap = 4500;
+
+                  lcd.clear();
+               }
+
+               lcd.setCursor(0, 0);
+               lcd.print("Enter capacity:");
+               lcd.setCursor(0, 1);
+               lcd.print(batt_cap);
+               lcd.print(" mAh");
+
+               delay(250);
+            }
+         }
+      }
+
+      if (digitalRead(START_CHARGING_BUTTON) == LOW) {
+         EEPROM.put(address, batt_cap);
+         lcd.clear();
+         lcd.setCursor(0, 0);
+         lcd.print("Your battery");
+         lcd.setCursor(0, 1);
+         lcd.print("is ");
+         lcd.print(batt_cap);
+         lcd.print(" mAh.");
+
+         delay(2 * ONE_SECOND);
+
+         lcd.clear();
+         lcd.setCursor(0, 0);
+         lcd.print("Set current");
+         lcd.setCursor(0, 1);
+         lcd.print("limit = ");
+
+         //------- Charging Parameters ----------//
+         current_lt = batt_cap * 0.2;
+         peak_I_lt = batt_cap * 0.3 * 0.001;
+         cut_off = batt_cap * 0.04 * 0.001;
+         //-------------------------------------//
+
+         lcd.print(current_lt);
+         lcd.print(" mA");
+
+         delay(3 * ONE_SECOND);
+
+         set_batt = false;
+      }
+   }
+
+   current_calib();
+   CCCV();
 }
 
 void loop()
