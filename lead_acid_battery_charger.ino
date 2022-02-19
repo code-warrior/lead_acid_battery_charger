@@ -22,7 +22,7 @@ boolean var = true;
 int hours_spent_charging = 0;
 int minutes_spent_charging = 0;
 int seconds_spent_charging = 0;
-float currentReading;
+float current_dc_reading;
 float CV_current = 0;
 
 void setup() {
@@ -113,9 +113,8 @@ void setup() {
 
 void loop() {
    static int i;
-
    for (i = 0; i < 10; i++) {
-      currentReading = AnalogCurrentSensor.getCurrentDC();
+      current_dc_reading = AnalogCurrentSensor.getCurrentDC();
       delay(.1 * ONE_SECOND);
    }
 
@@ -123,26 +122,26 @@ void loop() {
    lcd.clear();
    lcd.setCursor(0, 0);
 
-   if (currentReading <= CV_current) {
+   if (current_dc_reading <= CV_current) {
       lcd.print("MODE:CV");
    }
 
-   if (currentReading > CV_current) {
+   if (current_dc_reading > CV_current) {
       lcd.print("MODE:CC");
    }
 
    lcd.setCursor(0, 1);
    lcd.print("CURRENT: ");
-   lcd.print(currentReading);
+   lcd.print(current_dc_reading);
    lcd.print(" A");
 
-   if (currentReading <= cut_off) {
+   if (current_dc_reading <= cut_off) {
       for (i = 0; i < 10; i++) {
-         currentReading = AnalogCurrentSensor.getCurrentDC();
+         current_dc_reading = AnalogCurrentSensor.getCurrentDC();
          delay(.1 * ONE_SECOND);
       }
 
-      if (currentReading <= cut_off) {
+      if (current_dc_reading <= cut_off) {
          digitalWrite(RELAY_PIN, LOW);
          lcd.clear();
          lcd.setCursor(0, 0);
@@ -156,17 +155,17 @@ void loop() {
       }
    }
 
-   currentReading = AnalogCurrentSensor.getCurrentDC();
+   current_dc_reading = AnalogCurrentSensor.getCurrentDC();
 
-   if (currentReading >= peak_I_lt) {
+   if (current_dc_reading >= peak_I_lt) {
       digitalWrite(RELAY_PIN, LOW);
       calibrate_current_to_battery();
       digitalWrite(RELAY_PIN, HIGH);
       delay(3 * ONE_SECOND);
 
-      currentReading = AnalogCurrentSensor.getCurrentDC();
+      current_dc_reading = AnalogCurrentSensor.getCurrentDC();
 
-      if (currentReading >= peak_I_lt) {
+      if (current_dc_reading >= peak_I_lt) {
          while (true) {
             digitalWrite(RELAY_PIN, LOW);
             lcd.clear();
@@ -193,14 +192,14 @@ void calibrate_current_to_battery() {
    lcd.print("Current Sensor.");
    AnalogCurrentSensor.calibrate();
    delay(ONE_SECOND);
-   currentReading = AnalogCurrentSensor.getCurrentDC();
+   current_dc_reading = AnalogCurrentSensor.getCurrentDC();
 
-   if (currentReading >= 0.02 || currentReading <= -0.02 ) {
+   if (current_dc_reading >= 0.02 || current_dc_reading <= -0.02 ) {
       AnalogCurrentSensor.calibrate();
       delay(5 * ONE_SECOND);
-      currentReading = AnalogCurrentSensor.getCurrentDC();
+      current_dc_reading = AnalogCurrentSensor.getCurrentDC();
 
-      if (currentReading >= 0.02) {
+      if (current_dc_reading >= 0.02) {
          calibrate_current_to_battery();
       }
    }
@@ -260,11 +259,11 @@ void CCCV() {
    digitalWrite(RELAY_PIN, HIGH);
 
    for (i = 0; i < 20; i++) {
-      currentReading = AnalogCurrentSensor.getCurrentDC();
+      current_dc_reading = AnalogCurrentSensor.getCurrentDC();
       delay(.1 * ONE_SECOND);
    }
 
-   if (currentReading <= -0.1) {
+   if (current_dc_reading <= -0.1) {
       while (true) {
          digitalWrite(RELAY_PIN, LOW);
          lcd.clear();
@@ -282,6 +281,6 @@ void CCCV() {
       }
    }
 
-   CV_current = currentReading * 0.8;
+   CV_current = current_dc_reading * 0.8;
 }
 //-------© Electronics-Project-hub-------//
