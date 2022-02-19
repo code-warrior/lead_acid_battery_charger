@@ -115,7 +115,7 @@ void setup() {
 void loop() {
    for (i = 0; i < 10; i++) {
       currentReading = AnalogCurrentSensor.getCurrentDC();
-      delay(100);
+      delay(.1 * ONE_SECOND);
    }
 
    timer();
@@ -138,7 +138,7 @@ void loop() {
    if (currentReading <= cut_off) {
       for (i = 0; i < 10; i++) {
          currentReading = AnalogCurrentSensor.getCurrentDC();
-         delay(100);
+         delay(.1 * ONE_SECOND);
       }
 
       if (currentReading <= cut_off) {
@@ -258,7 +258,7 @@ void CCCV() {
 
    for (i = 0; i < 20; i++) {
       currentReading = AnalogCurrentSensor.getCurrentDC();
-      delay(100);
+      delay(.1 * ONE_SECOND);
    }
 
    if (currentReading <= -0.1) {
