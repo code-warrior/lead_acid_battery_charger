@@ -141,6 +141,7 @@ void loop() {
          delay(.1 * ONE_SECOND);
       }
 
+      // As the battery charges, the current in the battery goes down
       if (current_dc_reading <= cut_off) {
          digitalWrite(RELAY_PIN, LOW);
          lcd.clear();
