@@ -152,6 +152,7 @@ void loop() {
 
          // Once the battery is fully charged, do nothing forever
          while (true) {
+            ;
          }
       }
    }
