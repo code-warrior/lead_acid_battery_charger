@@ -69,7 +69,7 @@ void setup() {
                lcd.print(battery_capacity_in_milliamp_hours);
                lcd.print(" mAh");
 
-               delay(250);
+               delay(.25 * ONE_SECOND);
             }
          }
       }
