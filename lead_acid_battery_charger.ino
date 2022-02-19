@@ -149,7 +149,7 @@ void loop() {
          lcd.setCursor(0, 1);
          lcd.print("CHARGED.");
 
-         /* ??? */
+         // Once the battery is fully charged, do nothing forever
          while (true) {
          }
       }
