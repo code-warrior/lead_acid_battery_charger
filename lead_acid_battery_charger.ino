@@ -12,7 +12,7 @@ int m_lt = 0; // in min
 // -------------------------------//
 
 int address = 0;
-int batt_cap;
+int battery_capacity;
 int current_lt = 0;
 float peak_I_lt = 0;
 float cut_off = 0;
@@ -32,9 +32,9 @@ void setup() {
    pinMode(START_CHARGING_BUTTON, INPUT_PULLUP);
    lcd.init();
    lcd.backlight();
-   EEPROM.get(address, batt_cap);
+   EEPROM.get(address, battery_capacity);
 
-   if (batt_cap < 4500) {
+   if (battery_capacity < 4500) {
       EEPROM.put(address, 4500);
    }
 
@@ -44,8 +44,8 @@ void setup() {
       lcd.setCursor(0, 0);
       lcd.print("Enter capacity:");
       lcd.setCursor(0, 1);
-      EEPROM.get(address, batt_cap);
-      lcd.print(batt_cap);
+      EEPROM.get(address, battery_capacity);
+      lcd.print(battery_capacity);
       lcd.print(" mAh");
 
       if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW) {
@@ -55,10 +55,10 @@ void setup() {
 
             if (digitalRead(INCREMENT_CAPACITY_BUTTON) == LOW) {
                lcd.setCursor(0, 1);
-               batt_cap = batt_cap + 500;
+               battery_capacity = battery_capacity + 500;
 
-               if (batt_cap > 15000) {
-                  batt_cap = 4500;
+               if (battery_capacity > 15000) {
+                  battery_capacity = 4500;
 
                   lcd.clear();
                }
@@ -66,7 +66,7 @@ void setup() {
                lcd.setCursor(0, 0);
                lcd.print("Enter capacity:");
                lcd.setCursor(0, 1);
-               lcd.print(batt_cap);
+               lcd.print(battery_capacity);
                lcd.print(" mAh");
 
                delay(250);
@@ -75,13 +75,13 @@ void setup() {
       }
 
       if (digitalRead(START_CHARGING_BUTTON) == LOW) {
-         EEPROM.put(address, batt_cap);
+         EEPROM.put(address, battery_capacity);
          lcd.clear();
          lcd.setCursor(0, 0);
          lcd.print("Your battery");
          lcd.setCursor(0, 1);
          lcd.print("is ");
-         lcd.print(batt_cap);
+         lcd.print(battery_capacity);
          lcd.print(" mAh.");
 
          delay(2 * ONE_SECOND);
@@ -93,9 +93,9 @@ void setup() {
          lcd.print("limit = ");
 
          //------- Charging Parameters ----------//
-         current_lt = batt_cap * 0.2;
-         peak_I_lt = batt_cap * 0.3 * 0.001;
-         cut_off = batt_cap * 0.04 * 0.001;
+         current_lt = battery_capacity * 0.2;
+         peak_I_lt = battery_capacity * 0.3 * 0.001;
+         cut_off = battery_capacity * 0.04 * 0.001;
          //-------------------------------------//
 
          lcd.print(current_lt);
