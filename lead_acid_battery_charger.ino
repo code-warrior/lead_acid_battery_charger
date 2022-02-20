@@ -3,6 +3,8 @@
 #include <EEPROM.h>
 #include <LiquidCrystal_I2C.h> // https://gitlab.com/growduino/libs/LiquidCrystal_I2C
 
+// https://electronics-project-hub.com/arduino-12v-lead-acid-battery-charger/
+
 LiquidCrystal_I2C lcd(0x27, 16, 2); // Set the LCD address to 0x27 for a 16 × 2 display (16 chars, 2 lines)
 ACS712 AnalogCurrentSensor(ACS712_05B, ACS712_CURRENT_SENSOR);
 
