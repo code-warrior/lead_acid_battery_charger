@@ -120,11 +120,11 @@ void loop() {
    lcd.setCursor(0, 0);
 
    if (current_dc_reading <= CV_current) {
-      lcd.print("MODE:CV");
+      lcd.print("MODE: CV");
    }
 
    if (current_dc_reading > CV_current) {
-      lcd.print("MODE:CC");
+      lcd.print("MODE: CC");
    }
 
    lcd.setCursor(0, 1);
