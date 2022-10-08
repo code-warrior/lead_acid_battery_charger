@@ -1,7 +1,8 @@
 #include "constants.h"
 #include "ACS712.h"            // https://github.com/rkoptev/ACS712-arduino
 #include <EEPROM.h>
-#include <LiquidCrystal_I2C.h> // https://gitlab.com/growduino/libs/LiquidCrystal_I2C
+#include "LiquidCrystal_I2C.h" // Library needs to be included: Sketch | Include Library | Manage Libraries…, then search for “LiquidCrystal_I2C”
+                               // Original library at https://gitlab.com/growduino/libs/LiquidCrystal_I2C
 
 // https://electronics-project-hub.com/arduino-12v-lead-acid-battery-charger/
 
